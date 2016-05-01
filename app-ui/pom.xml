@@ -12,7 +12,7 @@
 	<artifactId>app-ui</artifactId>
 	<packaging>jar</packaging>
 	<name>Generic app UI</name>
-	
+
 	<properties>
 		<maven.test.skip>true</maven.test.skip>
 		<assembly.descriptor>src/main/assembly/zip.xml</assembly.descriptor>
@@ -82,69 +82,69 @@
 			</plugin>
 
 			<!-- todo : this requires curl, replace this part with day's content-package-maven-plugin-->
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>exec-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>author</id>
-						<phase>install</phase>
-						<goals>
-							<goal>exec</goal>
-						</goals>
-						<configuration>
-							<executable>curl</executable>
-							<arguments>
-								<argument>-f</argument>
-								<argument>-v</argument>
-								<argument>-u</argument>
-								<argument>${sling.user}:${sling.password}</argument>
-								<argument>-F</argument>
-								<argument>file=@./target/${project.artifactId}-${project.parent.version}.zip</argument>
-								<argument>http://${sling.host}:${sling.port}/crx/packmgr/service.jsp?name=${project.artifactId}-${project.parent.version}</argument>
-								<argument>-F</argument>
-								<argument>install=true</argument>
-							</arguments>
-						</configuration>
-					</execution>
-					<execution>
-						<id>publish</id>
-						<phase>install</phase>
-						<goals>
-							<goal>exec</goal>
-						</goals>
-						<configuration>
-							<skip>${skip-publish}</skip>
-							<executable>curl</executable>
-							<arguments>
-								<argument>-f</argument>
-								<argument>-v</argument>
-								<argument>-u</argument>
-								<argument>${sling.user}:${sling.password}</argument>
-								<argument>-F</argument>
-								<argument>file=@./target/${project.artifactId}-${project.parent.version}.zip</argument>
-								<argument>http://${sling.host}:${sling.port}/crx/packmgr/service.jsp?name=${project.artifactId}-${project.parent.version}</argument>
-								<argument>-F</argument>
-								<argument>install=true</argument>
-							</arguments>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
+			<!--	<plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>exec-maven-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>author</id>
+                            <phase>install</phase>
+                            <goals>
+                                <goal>exec</goal>
+                            </goals>
+                            <configuration>
+                                <executable>curl</executable>
+                                <arguments>
+                                    <argument>-f</argument>
+                                    <argument>-v</argument>
+                                    <argument>-u</argument>
+                                    <argument>${sling.user}:${sling.password}</argument>
+                                    <argument>-F</argument>
+                                    <argument>file=@./target/${project.artifactId}-${project.parent.version}.zip</argument>
+                                    <argument>http://${sling.host}:${sling.port}/crx/packmgr/service.jsp?name=${project.artifactId}-${project.parent.version}</argument>
+                                    <argument>-F</argument>
+                                    <argument>install=true</argument>
+                                </arguments>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>publish</id>
+                            <phase>install</phase>
+                            <goals>
+                                <goal>exec</goal>
+                            </goals>
+                            <configuration>
+                                <skip>${skip-publish}</skip>
+                                <executable>curl</executable>
+                                <arguments>
+                                    <argument>-f</argument>
+                                    <argument>-v</argument>
+                                    <argument>-u</argument>
+                                    <argument>${sling.user}:${sling.password}</argument>
+                                    <argument>-F</argument>
+                                    <argument>file=@./target/${project.artifactId}-${project.parent.version}.zip</argument>
+                                    <argument>http://${sling.host}:${sling.port}/crx/packmgr/service.jsp?name=${project.artifactId}-${project.parent.version}</argument>
+                                    <argument>-F</argument>
+                                    <argument>install=true</argument>
+                                </arguments>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin> -->
+            </plugins>
+        </build>
 
-	<dependencies>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>${core.name}</artifactId>
-			<version>${project.parent.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.adobe.aem</groupId>
-			<artifactId>aem-api</artifactId>
-			<version>6.0.0.1</version>
-			<scope>provided</scope>
-		</dependency>
-	</dependencies>
-</project>
+        <dependencies>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>${core.name}</artifactId>
+                <version>${project.parent.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.adobe.aem</groupId>
+                <artifactId>aem-api</artifactId>
+                <version>6.0.0.1</version>
+                <scope>provided</scope>
+            </dependency>
+        </dependencies>
+    </project>
