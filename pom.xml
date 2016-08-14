@@ -40,6 +40,7 @@
 		<maven.junit.usefile>false</maven.junit.usefile>
 		<skip-publish>true</skip-publish>
 		<m2e.plugin.version>1.0.0</m2e.plugin.version>
+        <scala.version>2.11.8</scala.version>
 	</properties>
 
 	<profiles>

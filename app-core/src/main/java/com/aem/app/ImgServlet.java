@@ -1,88 +1,71 @@
 package com.aem.app;
 
-import com.day.cq.wcm.api.Page;
-import com.day.cq.wcm.api.PageManager;
+
+import com.day.cq.commons.ImageHelper;
+import com.day.cq.dam.api.Asset;
+import com.day.cq.dam.api.Rendition;
+import com.day.cq.wcm.foundation.Image;
+import com.day.image.Layer;
+import org.apache.felix.scr.annotations.sling.SlingServlet;
 import org.apache.sling.api.SlingHttpServletRequest;
-import org.apache.sling.api.resource.Resource;
-import org.apache.sling.api.resource.ResourceResolver;
-import org.apache.sling.api.resource.ValueMap;
-import org.apache.sling.api.scripting.SlingScriptHelper;
+import org.apache.sling.api.SlingHttpServletResponse;
+import org.apache.sling.api.servlets.SlingSafeMethodsServlet;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.jcr.RepositoryException;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
-/**
- * Base class for all backing beans.
- * access to commonly used Adobe CQ APIs.
- */
-public abstract class ImgServlet {
+@SlingServlet(paths = {"/bin/img"}, methods = {"GET"})
+public class ImgServlet extends SlingSafeMethodsServlet {
+    private Logger logger = LoggerFactory.getLogger(ImgServlet.class);
 
-    private final SlingHttpServletRequest request;
+    @Override
+    protected void doGet(SlingHttpServletRequest request, SlingHttpServletResponse response) throws ServletException, IOException {
+        logger.debug("ImgServlet called!");
+        String imgpath = request.getParameter("imgpath");
+        String res = request.getParameter("res");
+        logger.info("imgpath:" + imgpath);
+        logger.info("res:" + res);
 
-    private final SlingScriptHelper slingHelper;
 
-    private final PageManager pageManager;
+        Image image = new Image(request.getResourceResolver().getResource(imgpath));
+        Asset asset = request.getResourceResolver().getResource(imgpath).adaptTo(Asset.class);
 
-    /**
-     * Constructor for AbstractBackingBean.
-     *
-     * @param request     SlingHttpServletRequest
-     * @param slingHelper SlingScriptHelper
-     */
-    protected ImgServlet(SlingHttpServletRequest request, SlingScriptHelper slingHelper) {
-        this.request = request;
-        this.slingHelper = slingHelper;
-        this.pageManager = request.getResourceResolver().adaptTo(PageManager.class);
-    }
+        Rendition original = asset.getOriginal();
+        Layer layer = new Layer(original.getStream());
 
-    /**
-     * @return Current {@link HttpServletRequest}
-     */
-    protected SlingHttpServletRequest getRequest() {
-        return request;
-    }
 
-    /**
-     * @return Current {@link ResourceResolver}.
-     */
-    protected ResourceResolver getResourceResolver() {
-        return request.getResourceResolver();
-    }
+        int w = Integer.valueOf(res.split("x")[0]);
+        int h = Integer.valueOf(res.split("x")[1]);
 
-    /**
-     * @return currently accessed {@link Resource}
-     */
-    private Resource getResource() {
-        return request.getResource();
-    }
+        logger.info("image==null:" + (image == null));
 
-    /**
-     * @return properties map for current JCR Node
-     */
-    protected ValueMap getProperties() {
-        ValueMap properties = getResource().adaptTo(ValueMap.class);
-        return (properties != null) ? properties : ValueMap.EMPTY;
-    }
+        try {
+            //layer = image.getLayer(true, true, true);
+            if (layer != null) {
+                logger.info("layer is not null");
+                layer.resize(w, h);
 
-    /**
-     * @return helper, providing programatic access to Sling & OSGi services
-     * @see SlingScriptHelper#getService(Class)
-     */
-    protected SlingScriptHelper getSlingHelper() {
-        return slingHelper;
-    }
+            } else {
+                logger.info("layer is null");
+            }
+            String mimeType = image.getMimeType();
+            if (ImageHelper.getExtensionFromType(mimeType) == null) {
+                mimeType = "image/png";
+            }
 
-    /**
-     * @return {@link PageManager} implementation
-     */
-    protected PageManager getPageManager() {
-        return pageManager;
-    }
+            logger.info("response.getOutputStream():" + response.getOutputStream());
+            logger.info("mimeType:" + mimeType);
+            logger.info("layer:" + layer.toString());
 
-    /**
-     * @return current content {@link Page}
-     */
-    protected Page getCurrentPage() {
-        Resource resource = getResource();
-        return (pageManager != null) ? pageManager.getContainingPage(resource) : null;
+            response.setContentType(mimeType);
+            layer.write(mimeType, 1.0, response.getOutputStream());
+            response.flushBuffer();
+        } catch (RepositoryException e) {
+            response.sendError(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE);
+        }
     }
 }
