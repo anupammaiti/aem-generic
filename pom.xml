@@ -31,15 +31,13 @@
 	</pluginRepositories>
 
 	<properties>
-		<cq.package.group>Aem Generic</cq.package.group>
+		<cq.package.group>AEM Generic</cq.package.group>
 		<core.name>app-core</core.name>
 		<maven.build.timestamp.format>yyyy-MM-dd'T'HH:mm:ss.SSSZ</maven.build.timestamp.format>
 		<timestamp>${maven.build.timestamp}</timestamp>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<maven.junit.usefile>false</maven.junit.usefile>
-		<skip-publish>true</skip-publish>
-		<m2e.plugin.version>1.0.0</m2e.plugin.version>
         <scala.version>2.11.8</scala.version>
 	</properties>
 
