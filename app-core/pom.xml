@@ -45,7 +45,22 @@
                 <extensions>true</extensions>
                 <configuration>
                     <instructions>
-                        <Import-Package>!sun.misc</Import-Package>
+                        <Import-Package>
+                            !sun.misc,
+                            com.day.cq.commons,
+                            com.day.cq.dam.api,
+                            com.day.cq.wcm.api,
+                            com.day.cq.wcm.foundation,
+                            com.day.image,
+                            javax.jcr,
+                            javax.servlet,
+                            javax.servlet.http,
+                            org.apache.sling.api,
+                            org.apache.sling.api.resource,
+                            org.apache.sling.api.scripting,
+                            org.apache.sling.api.servlets,
+                            org.slf4j
+                        </Import-Package>
                         <Export-Package>com.aem.app.*</Export-Package>
                         <Embed-Transitive>true</Embed-Transitive>
                         <Embed-Dependency>scala-library, scala-reflect</Embed-Dependency>
@@ -192,9 +207,9 @@
         <!-- and the god of all apis -->
         <dependency>
             <groupId>com.adobe.aem</groupId>
-            <artifactId>aem-api</artifactId>
-            <version>6.0.0.1</version>
-            <scope>provided</scope>
+            <artifactId>uber-jar</artifactId>
+            <version>6.1.0</version>
+            <classifier>obfuscated-apis</classifier>
         </dependency>
 
         <!-- Scala-->
