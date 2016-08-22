@@ -14,7 +14,7 @@ class TestServletScala extends SlingSafeMethodsServlet {
 
   @throws[ServletException]
   @throws[IOException]
-  override def doGet(request: SlingHttpServletRequest, response: SlingHttpServletResponse) = {
+  override def doGet(request: SlingHttpServletRequest, response: SlingHttpServletResponse) : Unit = {
     logger.info("TestServletScala GET called!")
     response.getWriter.write("Hello from TestServletScala")
   }
