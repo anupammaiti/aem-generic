@@ -46,20 +46,8 @@
                 <configuration>
                     <instructions>
                         <Import-Package>
-                            !sun.misc,
-                            com.day.cq.commons,
-                            com.day.cq.dam.api,
-                            com.day.cq.wcm.api,
-                            com.day.cq.wcm.foundation,
-                            com.day.image,
-                            javax.jcr,
-                            javax.servlet,
-                            javax.servlet.http,
-                            org.apache.sling.api,
-                            org.apache.sling.api.resource,
-                            org.apache.sling.api.scripting,
-                            org.apache.sling.api.servlets,
-                            org.slf4j
+                            !sun.misc.*,
+                            *
                         </Import-Package>
                         <Export-Package>com.aem.app.*</Export-Package>
                         <Embed-Transitive>true</Embed-Transitive>
