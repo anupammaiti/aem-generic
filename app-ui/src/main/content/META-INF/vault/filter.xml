@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <workspaceFilter version="1.0">
-    <filter root="/apps/generic-app/components" />
-    <filter root="/apps/generic-app/templates" />
-	<filter root="/apps/generic-app/widgets" />
-    <filter root="/apps/generic-app/install/${core.name}-${project.parent.version}.jar" />
-    <filter root="/etc/designs/generic-app" />
-    <filter root="/etc/clientlibs/generic-app" />
+    <filter root="/apps/generic-app/components"/>
+    <filter root="/apps/generic-app/templates"/>
+    <filter root="/apps/generic-app/widgets"/>
+    <filter root="/apps/generic-app/install/${core.name}-${project.parent.version}.jar"/>
+    <filter root="/etc/designs/generic-app"/>
+    <filter root="/etc/clientlibs/generic-app"/>
 </workspaceFilter>

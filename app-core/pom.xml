@@ -51,7 +51,7 @@
                         </Import-Package>
                         <Export-Package>com.aem.app.*</Export-Package>
                         <Embed-Transitive>true</Embed-Transitive>
-                        <Embed-Dependency>scala-library, scala-reflect</Embed-Dependency>
+                        <Embed-Dependency>scala-library</Embed-Dependency>
                     </instructions>
                 </configuration>
             </plugin>

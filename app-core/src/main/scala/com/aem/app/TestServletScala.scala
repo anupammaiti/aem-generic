@@ -6,7 +6,7 @@ import javax.servlet.ServletException
 import org.apache.felix.scr.annotations.sling.SlingServlet
 import org.apache.sling.api.servlets.SlingSafeMethodsServlet
 import org.apache.sling.api.{SlingHttpServletRequest, SlingHttpServletResponse}
-import org.slf4j.{Logger, LoggerFactory}
+import org.slf4j.LoggerFactory
 
 @SlingServlet(paths = Array("/bin/testscala"), methods = Array("GET"))
 class TestServletScala extends SlingSafeMethodsServlet {
@@ -14,7 +14,7 @@ class TestServletScala extends SlingSafeMethodsServlet {
 
   @throws[ServletException]
   @throws[IOException]
-  override def doGet(request: SlingHttpServletRequest, response: SlingHttpServletResponse) : Unit = {
+  override def doGet(request: SlingHttpServletRequest, response: SlingHttpServletResponse): Unit = {
     logger.info("TestServletScala GET called!")
     response.getWriter.write("Hello from TestServletScala")
   }
